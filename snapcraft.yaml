@@ -1,0 +1,96 @@
+name: amberol
+version: 0.9.0
+summary: A small and simple sound and music player that is well integrated with GNOME.
+description: |
+ Amberol aspires to be as small, unintrusive, and simple as possible. It does
+ not manage your music collection; it does not let you manage playlists, smart
+ or otherwise; it does not let you edit the metadata for your songs; it does
+ not show you lyrics for your songs, or the Wikipedia page for your bands.
+
+ Amberol plays music, and nothing else.
+base: core22
+grade: stable
+confinement: strict
+license: GPL-3.0+
+
+slots:
+  # for GtkApplication registration
+  amberol:
+    interface: dbus
+    bus: session
+    name: io.bassi.Amberol
+  mpris:
+    name: Amberol
+
+apps:
+  amberol:
+    environment:
+      XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
+    command: amberol
+    extensions: [gnome]
+    # desktop: usr/share/applications/io.bassi.Amberol.desktop
+    common-id: io.bassi.Amberol
+    plugs:
+      - home
+      - audio-playback
+      - desktop
+      - desktop-legacy
+      - gsettings
+      - opengl
+      - wayland
+      - x11
+      - mount-observe
+    slots:
+      - mpris
+
+parts:
+  amberol:
+    source: https://gitlab.gnome.org/World/amberol/-/archive/$SNAPCRAFT_PROJECT_VERSION/amberol-$SNAPCRAFT_PROJECT_VERSION.tar.bz2
+    plugin: meson
+    meson-parameters:
+      - --prefix=/snap/amberol/current/usr
+    parse-info: [usr/share/metainfo/io.bassi.Amberol.xml]
+    organize:
+      snap/amberol/current: .
+    build-packages:
+      - meson
+      - ninja-build
+      - intltool
+      - gettext
+      - gnome-common
+      - rustc
+      - appstream
+      - libappstream-glib-dev
+      - libappstream-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libgstreamer-plugins-bad1.0-dev
+      - libadwaita-1-dev
+      - libdbus-1-dev
+      - cargo
+      - git
+      - desktop-file-utils
+    stage-packages:
+      - libgstreamer-plugins-base1.0-0
+      - libgstreamer1.0-0
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
+      - libadwaita-1-0
+      - libdbus-1-3
+    override-build: |
+      # snapd can't use a name like de.haeckerfelix.Shortwave for mpris
+      # (since it contains periods) so instead make this just Shortwave
+      sed -i '0,/APPLICATION_ID.to_string()/{s/APPLICATION_ID.to_string()/"Amberol".to_string()/}' ../src/src/audio/mpris_controller.rs
+      craftctl default
+
+    override-prime: |
+      set -eu
+      craftctl default
+      # Fix-up application icon lookup
+      sed -i.bak -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
+
+  wrapper:
+    plugin: dump
+    source: wrapper
