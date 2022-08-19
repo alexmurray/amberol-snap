@@ -76,8 +76,8 @@ parts:
       - libadwaita-1-0
       - libdbus-1-3
     override-build: |
-      # snapd can't use a name like de.haeckerfelix.Shortwave for mpris
-      # (since it contains periods) so instead make this just Shortwave
+      # snapd can't use a name like io.bassi.Amberol for mpris
+      # (since it contains periods) so instead make this just Amberol
       sed -i '0,/APPLICATION_ID.to_string()/{s/APPLICATION_ID.to_string()/"Amberol".to_string()/}' ../src/src/audio/mpris_controller.rs
       craftctl default
 
