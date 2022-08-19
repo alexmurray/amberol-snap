@@ -26,20 +26,16 @@ apps:
   amberol:
     environment:
       XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
-    command: amberol
+    command: usr/bin/amberol
     extensions: [gnome]
-    # desktop: usr/share/applications/io.bassi.Amberol.desktop
+    desktop: usr/share/applications/io.bassi.Amberol.desktop
     common-id: io.bassi.Amberol
     plugs:
       - home
       - audio-playback
-      - desktop
-      - desktop-legacy
-      - gsettings
-      - opengl
-      - wayland
-      - x11
+      - removable-media
       - mount-observe
+      - hostname-control
     slots:
       - mpris
 
@@ -90,7 +86,3 @@ parts:
       craftctl default
       # Fix-up application icon lookup
       sed -i.bak -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
-
-  wrapper:
-    plugin: dump
-    source: wrapper
