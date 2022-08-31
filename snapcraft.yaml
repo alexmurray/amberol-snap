@@ -1,5 +1,5 @@
 name: amberol
-version: 0.9.0
+version: 0.9.1
 summary: A small and simple sound and music player that is well integrated with GNOME.
 description: |
  Amberol aspires to be as small, unintrusive, and simple as possible. It does
@@ -41,7 +41,8 @@ apps:
 
 parts:
   amberol:
-    source: https://gitlab.gnome.org/World/amberol/-/archive/$SNAPCRAFT_PROJECT_VERSION/amberol-$SNAPCRAFT_PROJECT_VERSION.tar.bz2
+    source: https://gitlab.gnome.org/World/amberol.git
+    source-tag: $SNAPCRAFT_PROJECT_VERSION
     plugin: meson
     meson-parameters:
       - --prefix=/snap/amberol/current/usr
