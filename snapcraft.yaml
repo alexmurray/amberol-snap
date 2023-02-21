@@ -95,3 +95,16 @@ parts:
           execstack -c $f
         fi
       done
+  cleanup:
+    after:  # Make this part run last; list all your other parts here
+      - amberol
+    plugin: nil
+    build-snaps:  # List all content-snaps and base snaps you're using here
+      - core22
+      - gnome-42-2204
+      - gnome-42-2204-sdk
+  override-prime: |
+    set -eux
+    for snap in "<CORE-SNAP>" "<CONTENT-SNAP-1>" "<CONTENT-SNAP-2>"; do  # List all content-snaps and base snaps you're using here
+        cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
+    done
