@@ -1,0 +1,17 @@
+name: build-snap
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: snapcore/action-build@v1
+      id: build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: snap
+        path: ${{ steps.build.outputs.snap }}
