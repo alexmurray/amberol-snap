@@ -16,7 +16,7 @@ jobs:
         sudo snap install review-tools
         sudo snap install yq
         review-tools.store-query --snap-decl amberol | yq --output-format json .slots > slots.json
-        review-tools.snap-review ${{ steps.build.outputs.snap }} --slots slots.json
+        review-tools.snap-review  --slots slots.json ${{ steps.build.outputs.snap }}
     - uses: actions/upload-artifact@v3
       with:
         name: snap
