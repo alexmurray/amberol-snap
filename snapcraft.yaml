@@ -84,7 +84,7 @@ parts:
           execstack -c $f
         fi
       done
-    parse-info: [usr/share/metainfo/io.bassi.Amberol.appdata.xml]
+    parse-info: [usr/share/appdata/io.bassi.Amberol.appdata.xml]
   cleanup:
     after:  # Make this part run last; list all your other parts here
       - amberol
