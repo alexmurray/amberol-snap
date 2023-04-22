@@ -34,6 +34,8 @@ apps:
     desktop: usr/share/applications/io.bassi.Amberol.desktop
     common-id: io.bassi.Amberol
     plugs:
+      - home
+      - removable-media
       - audio-playback
       - mount-observe
       - hostname-control
