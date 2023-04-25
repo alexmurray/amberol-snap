@@ -1,20 +1,11 @@
 name: amberol
 version: 0.9.1
 adopt-info: amberol
-#summary: A small and simple sound and music player that is well integrated with GNOME.
-#description: |
-# Amberol aspires to be as small, unintrusive, and simple as possible. It does
-# not manage your music collection; it does not let you manage playlists, smart
-# or otherwise; it does not let you edit the metadata for your songs; it does
-# not show you lyrics for your songs, or the Wikipedia page for your bands.
-#
-# Amberol plays music, and nothing else.
 base: core22
 grade: stable
 confinement: strict
 license: GPL-3.0+
 compression: lzo
-icon: io.bassi.Amberol.svg
 
 slots:
   # for GtkApplication registration
@@ -67,8 +58,6 @@ parts:
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
-      #- libadwaita-1-0
-      #- libdbus-1-3
     override-build: |
       # snapd can't use a name like io.bassi.Amberol for mpris
       # (since it contains periods) so instead make this just Amberol
@@ -79,7 +68,7 @@ parts:
       set -eu
       craftctl default
       # Fix-up application icon lookup
-      #sed -i.bak -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
+      sed -i.bak -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
       # try remove execstack on armhf
       for f in usr/lib/arm-linux-gnueabihf/libde265.so.0.1.1 usr/lib/arm-linux-gnueabihf/libmpeg2.so.0.1.0; do
         if [ -f $f ]; then
