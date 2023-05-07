@@ -51,13 +51,13 @@ parts:
       - libgstreamer-plugins-bad1.0-dev
       - cargo
       - execstack
-    stage-packages:
-      - libgstreamer-plugins-base1.0-0
-      - libgstreamer1.0-0
-      - gstreamer1.0-plugins-base
-      - gstreamer1.0-plugins-good
-      - gstreamer1.0-plugins-bad
-      - gstreamer1.0-plugins-ugly
+    #stage-packages:
+    #  - libgstreamer-plugins-base1.0-0
+    #  - libgstreamer1.0-0
+    #  - gstreamer1.0-plugins-base
+    #  - gstreamer1.0-plugins-good
+    #  - gstreamer1.0-plugins-bad
+    #  - gstreamer1.0-plugins-ugly
     override-pull: |
       craftctl default
       # snapd can't use a name like io.bassi.Amberol for mpris
