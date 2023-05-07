@@ -40,7 +40,7 @@ parts:
     plugin: meson
     meson-parameters:
       - --prefix=/snap/amberol/current/usr
-    parse-info: [usr/share/metainfo/io.bassi.Amberol.appdata.xml]
+    parse-info: [usr/share/appdata/io.bassi.Amberol.appdata.xml]
     organize:
       snap/amberol/current: .
     build-packages:
