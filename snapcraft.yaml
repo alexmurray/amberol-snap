@@ -44,23 +44,12 @@ parts:
     organize:
       snap/amberol/current: .
     build-packages:
-      - meson
-      - ninja-build
       - intltool
-      - gettext
-      - gnome-common
       - rustc
-      - appstream
-      - libappstream-glib-dev
-      - libappstream-dev
       - libgstreamer1.0-dev
       - libgstreamer-plugins-base1.0-dev
       - libgstreamer-plugins-bad1.0-dev
-      - libadwaita-1-dev
-      - libdbus-1-dev
       - cargo
-      - git
-      - desktop-file-utils
       - execstack
     stage-packages:
       - libgstreamer-plugins-base1.0-0
@@ -69,8 +58,6 @@ parts:
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
-      - libadwaita-1-0
-      - libdbus-1-3
     override-build: |
       # snapd can't use a name like io.bassi.Amberol for mpris
       # (since it contains periods) so instead make this just Amberol
