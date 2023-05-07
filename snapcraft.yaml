@@ -58,11 +58,11 @@ parts:
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
-    override-build: |
+    override-pull: |
+      craftctl default
       # snapd can't use a name like io.bassi.Amberol for mpris
       # (since it contains periods) so instead make this just Amberol
-      sed -i '0,/APPLICATION_ID.to_string()/{s/APPLICATION_ID.to_string()/"Amberol".to_string()/}' ../src/src/audio/mpris_controller.rs
-      craftctl default
+      sed -i '0,/APPLICATION_ID.to_string()/{s/APPLICATION_ID.to_string()/"Amberol".to_string()/}' src/audio/mpris_controller.rs
 
     override-prime: |
       set -eu
