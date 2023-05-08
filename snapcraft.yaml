@@ -47,6 +47,8 @@ parts:
     plugin: meson
     meson-parameters:
       - --prefix=/snap/amberol/current/usr
+      - -Dbuildtype=release
+      - -Doptimization=2
     parse-info: [usr/share/metainfo/io.bassi.Amberol.xml]
     organize:
       snap/amberol/current: .
