@@ -1,11 +1,19 @@
 name: amberol
 version: 0.10.3
-summary: A small and simple sound and music player that is well integrated with GNOME.
+summary: Plays music, and nothing else
 description: |
- Amberol aspires to be as small, unintrusive, and simple as possible. It does
- not manage your music collection; it does not let you manage playlists, smart
- or otherwise; it does not let you edit the metadata for your songs; it does
- not show you lyrics for your songs, or the Wikipedia page for your bands.
+ Plays music, and nothing else
+
+ Amberol is a music player with no delusions of grandeur. If you just want to
+ play music available on your local system then Amberol is the music player you
+ are looking for.
+
+ Current features:
+  - adaptive UI
+  - UI recolouring using the album art
+  - drag and drop support to queue songs
+  - shuffle and repeat
+  - MPRIS integration
 
  Amberol plays music, and nothing else.
 base: core22
