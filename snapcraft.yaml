@@ -1,5 +1,5 @@
 name: amberol
-version: 0.9.2
+version: 0.10.3
 summary: A small and simple sound and music player that is well integrated with GNOME.
 description: |
  Amberol aspires to be as small, unintrusive, and simple as possible. It does
@@ -37,6 +37,7 @@ apps:
       - removable-media
       - mount-observe
       - hostname-control
+      - screen-inhibit-control
     slots:
       - mpris
 
