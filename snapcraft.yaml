@@ -72,12 +72,6 @@ parts:
       craftctl default
       # Fix-up application icon lookup
       sed -i.bak -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
-      # try remove execstack on armhf
-      for f in usr/lib/arm-linux-gnueabihf/libde265.so.0.1.1 usr/lib/arm-linux-gnueabihf/libmpeg2.so.0.1.0; do
-        if [ -f $f ]; then
-          execstack -c $f
-        fi
-      done
 
   gstreamer-plugins:
     plugin: nil
@@ -96,6 +90,15 @@ parts:
         cd /snap/$snap/current/usr/lib/$CRAFT_ARCH_TRIPLET
         find . -type f,l -name "*.so*" -exec bash -c "rm -f $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/{}*" \;
       done
+    override-prime: |
+      set -eux
+      # try remove execstack on armhf
+      for f in usr/lib/arm-linux-gnueabihf/libde265.so.0.1.1 usr/lib/arm-linux-gnueabihf/libmpeg2.so.0.1.0; do
+        if [ -f $f ]; then
+          execstack -c $f
+        fi
+      done
+
     prime:
       - usr/lib/$CRAFT_ARCH_TRIPLET/*.so*
       - usr/lib/$CRAFT_ARCH_TRIPLET/*/*.so*
