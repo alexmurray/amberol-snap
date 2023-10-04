@@ -1,21 +1,5 @@
 name: amberol
-version: 0.10.3
-summary: Plays music, and nothing else
-description: |
- Plays music, and nothing else
-
- Amberol is a music player with no delusions of grandeur. If you just want to
- play music available on your local system then Amberol is the music player you
- are looking for.
-
- Current features:
-  - adaptive UI
-  - UI recolouring using the album art
-  - drag and drop support to queue songs
-  - shuffle and repeat
-  - MPRIS integration
-
- Amberol plays music, and nothing else.
+adopt-info: amberol
 base: core22
 grade: stable
 confinement: strict
@@ -52,13 +36,13 @@ apps:
 parts:
   amberol:
     source: https://gitlab.gnome.org/World/amberol.git
-    source-tag: $SNAPCRAFT_PROJECT_VERSION
+    source-tag: '0.10.3'
     plugin: meson
     meson-parameters:
       - --prefix=/snap/amberol/current/usr
       - -Dbuildtype=release
       - -Doptimization=2
-    parse-info: [usr/share/metainfo/io.bassi.Amberol.xml]
+    parse-info: [usr/share/appdata/io.bassi.Amberol.appdata.xml]
     organize:
       snap/amberol/current: .
     build-packages:
@@ -77,37 +61,8 @@ parts:
       craftctl default
 
     override-prime: |
-      set -eu
       craftctl default
       # Fix-up application icon lookup
-      sed -i.bak -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
+      sed -i -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
 
-  gstreamer-plugins:
-    plugin: nil
-    build-snaps:
-      - core22
-      - gnome-42-2204
-    stage-packages:
-      - gstreamer1.0-plugins-bad
-      - gstreamer1.0-plugins-base
-      - gstreamer1.0-plugins-good
-      - gstreamer1.0-plugins-ugly
-    override-build: |
-      set -eux
-      craftctl default
-      for snap in "core22" "gnome-42-2204"; do
-        cd /snap/$snap/current/usr/lib/$CRAFT_ARCH_TRIPLET
-        find . -type f,l -name "*.so*" -exec bash -c "rm -f $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/{}*" \;
-      done
-    override-prime: |
-      set -eux
-      # try remove execstack on armhf
-      for f in usr/lib/arm-linux-gnueabihf/libde265.so.0.1.1 usr/lib/arm-linux-gnueabihf/libmpeg2.so.0.1.0; do
-        if [ -f $f ]; then
-          execstack -c $f
-        fi
-      done
 
-    prime:
-      - usr/lib/$CRAFT_ARCH_TRIPLET/*.so*
-      - usr/lib/$CRAFT_ARCH_TRIPLET/*/*.so*
