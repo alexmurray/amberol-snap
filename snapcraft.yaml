@@ -53,7 +53,6 @@ parts:
       - libgstreamer-plugins-bad1.0-dev
       - cargo
       - git
-      - execstack
     override-build: |
       # snapd can't use a name like io.bassi.Amberol for mpris
       # (since it contains periods) so instead make this just Amberol
