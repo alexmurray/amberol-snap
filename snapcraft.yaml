@@ -64,4 +64,24 @@ parts:
       # Fix-up application icon lookup
       sed -i -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
 
-
+  gstreamer-plugins:
+    plugin: nil
+    build-snaps:
+      - core22
+      - gnome-42-2204
+    stage-packages:
+      # needed for aac decoding - see
+      # https://github.com/alexmurray/amberol-snap/issues/11 - note the gnome
+      # SDK includes the various libgstreamer-plugins-xxx1.0-0 already so this
+      # is not needed - only the actual plugin itself
+      - gstreamer1.0-plugins-bad
+    override-build: |
+      set -eux
+      craftctl default
+      for snap in "core22" "gnome-42-2204"; do
+        cd /snap/$snap/current/usr/lib/$CRAFT_ARCH_TRIPLET
+        find . -type f,l -name "*.so*" -exec bash -c "rm -f $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/{}*" \;
+      done
+    prime:
+      - usr/lib/$CRAFT_ARCH_TRIPLET/*.so*
+      - usr/lib/$CRAFT_ARCH_TRIPLET/*/*.so*
