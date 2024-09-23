@@ -1,6 +1,6 @@
 name: amberol
 adopt-info: amberol
-base: core22
+base: core24
 grade: stable
 confinement: strict
 license: GPL-3.0+
@@ -67,8 +67,8 @@ parts:
   gstreamer-plugins:
     plugin: nil
     build-snaps:
-      - core22
-      - gnome-42-2204
+      - core24
+      - gnome-46-2404
     stage-packages:
       # needed for aac decoding - see
       # https://github.com/alexmurray/amberol-snap/issues/11 - note the gnome
@@ -78,7 +78,7 @@ parts:
     override-build: |
       set -eux
       craftctl default
-      for snap in "core22" "gnome-42-2204"; do
+      for snap in "core24" "gnome-46-2404"; do
         cd /snap/$snap/current/usr/lib/$CRAFT_ARCH_TRIPLET
         find . -type f,l -name "*.so*" -exec bash -c "rm -f $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/{}*" \;
       done
