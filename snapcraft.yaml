@@ -46,6 +46,7 @@ parts:
     organize:
       snap/amberol/current: .
     build-packages:
+      - execstack
       - m4
       - rustc
       - libgstreamer1.0-dev
@@ -63,7 +64,12 @@ parts:
       craftctl default
       # Fix-up application icon lookup
       sed -i -e 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/io.bassi.Amberol.svg|' usr/share/applications/io.bassi.Amberol.desktop
-
+      # try remove execstack on armhf
+      for f in libde265.so.0.1.1 libmpeg2.so.0.1.0libdirect-1.7.so.7.0.0; do
+        if [ -f usr/lib/arm-linux-gnueabihf/$f ]; then
+          execstack -c $f
+        fi
+      done
   gstreamer-plugins:
     plugin: nil
     build-snaps:
